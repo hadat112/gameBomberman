@@ -56,6 +56,7 @@ public class Oneal extends Enermy{
                 diedAni();
             }else {
                 entities.remove(this);
+                GameMap.enermyNum--;
             }
             currentDir = 0;
         }
@@ -69,16 +70,16 @@ public class Oneal extends Enermy{
 
     public void findWays() {
         possibleDir.clear();
-        if (x < bomber.x && !checkCollision(GameMap.stillObjects[y / 32][x / 32 + 1])) {
+        if (x < bomber.x && !checkCollision(GameMap.stillObjects[y / Sprite.SCALED_SIZE][x / Sprite.SCALED_SIZE + 1])) {
             possibleDir.add(6);
         }
-        if (x > bomber.x && !checkCollision(GameMap.stillObjects[y / 32][x / 32 - 1])) {
+        if (x > bomber.x && !checkCollision(GameMap.stillObjects[y / Sprite.SCALED_SIZE][x / Sprite.SCALED_SIZE - 1])) {
             possibleDir.add(4);
         }
-        if (y > bomber.y && !checkCollision(GameMap.stillObjects[y / 32 - 1][x / 32])) {
+        if (y > bomber.y && !checkCollision(GameMap.stillObjects[y / Sprite.SCALED_SIZE - 1][x / Sprite.SCALED_SIZE])) {
             possibleDir.add(8);
         }
-        if (y < bomber.y && !checkCollision(GameMap.stillObjects[y / 32 + 1][x / 32])) {
+        if (y < bomber.y && !checkCollision(GameMap.stillObjects[y / Sprite.SCALED_SIZE + 1][x / Sprite.SCALED_SIZE])) {
             possibleDir.add(2);
         }
     }
@@ -158,7 +159,7 @@ public class Oneal extends Enermy{
     }
 
     private void moveLeft() {
-        if (!checkCollision(GameMap.stillObjects[y / 32][x / 32 - 1])) {
+        if (!checkCollision(GameMap.stillObjects[y / Sprite.SCALED_SIZE][x / Sprite.SCALED_SIZE - 1])) {
             move(-speed, 0);
         } else {
             chooseAWay();
@@ -166,7 +167,7 @@ public class Oneal extends Enermy{
     }
 
     private void moveRight() {
-        if (!checkCollision(GameMap.stillObjects[y / 32][x / 32 + 1])) {
+        if (!checkCollision(GameMap.stillObjects[y / Sprite.SCALED_SIZE][x / Sprite.SCALED_SIZE + 1])) {
             move(speed, 0);
         } else {
             chooseAWay();
@@ -175,7 +176,7 @@ public class Oneal extends Enermy{
     }
 
     private void moveUp() {
-        if (!checkCollision(GameMap.stillObjects[y / 32 - 1][x / 32]))
+        if (!checkCollision(GameMap.stillObjects[y / Sprite.SCALED_SIZE - 1][x / Sprite.SCALED_SIZE]))
             move(0, -speed);
         else {
             chooseAWay();
@@ -183,7 +184,7 @@ public class Oneal extends Enermy{
     }
 
     private void moveDown() {
-        if (!checkCollision(GameMap.stillObjects[y / 32 + 1][x / 32]))
+        if (!checkCollision(GameMap.stillObjects[y / Sprite.SCALED_SIZE + 1][x / Sprite.SCALED_SIZE]))
             move(0, speed);
         else {
             chooseAWay();

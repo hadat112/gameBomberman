@@ -1,18 +1,13 @@
 package bomberman.entities;
 
 import bomberman.GameMap.GameMap;
+import bomberman.Sound.Sound;
 import bomberman.graphics.Sprite;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.SnapshotParameters;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.paint.Color;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Bomber extends Entity {
@@ -23,8 +18,6 @@ public class Bomber extends Entity {
     private int bomNum ;
     private int bomberWidth = 32;
     private int bomberHeight = 32;
-    private int WIDTH = 32;
-    private int HEIGHT = 32;
     Sprite sprite;
     private Bomb bomb;
 
@@ -67,7 +60,10 @@ public class Bomber extends Entity {
         if(isDie()) {
             diedAnimation();
             if (getAnimate() > 25) {
+                Sound.playLosingSound();
+                Sound.stop();
                 entities.remove(this);
+
 //                Sound.playLosingSound();
 //                Sound.stop();
             }
@@ -76,27 +72,27 @@ public class Bomber extends Entity {
         checkBomber(entities);
 
 //        Kiểm tra xem có bomb đang được đặt không nếu có thì chạy animation trong 2s sau đó cho nổ
-        entities.forEach(b -> {
-            if (b instanceof Bomb) {
+        for (int i = 0; i < entities.size(); i++) {
+            Entity b = entities.get(i);
+            if (b != null && b instanceof Bomb) {
                 ((Bomb) b).runBombAnimation();
 
                 if (System.currentTimeMillis() - ((Bomb) b).getPlantTime() > 2000) {
-                    bomb.isExploded = true;
-
-//            if (bomb.isCanPlaySound()) {
-//                Sound.playExplosionSound();
-//                bomb.setCanPlaySound(false);
-//            }
+                    ((Bomb) b).isExploded = true;
+                    if (((Bomb) b).canPlaySound) {
+                        Sound.playExplosionSound();
+                        ((Bomb) b).canPlaySound = false;
+                    }
                     ((Bomb) b).explode();
                     ((Bomb) b).showExplosion();
                 }
-                if (System.currentTimeMillis() - ((Bomb) b).getPlantTime() >= 2500) {
-                    GameMap.stillObjects[b.getY() / 32][b.getX() / 32].setPassable(true);
+                if (System.currentTimeMillis() - ((Bomb)b).getPlantTime() >= 2500) {
+                    GameMap.stillObjects[b.getY() / Sprite.SCALED_SIZE][b.getX() / Sprite.SCALED_SIZE].setPassable(true);
                     entities.remove(b);
                     bomNum++;
                 }
             }
-        });
+        }
 
     }
 
@@ -160,8 +156,8 @@ public class Bomber extends Entity {
 
     //Nếu có thể đi theo hướng nào sẽ cộng thêm vào hướng đó
     public void moveLeft() {
-        if (Math.abs(y - y / 32 * 32 - 32) <= 6) y += Math.abs(y - y / 32 * 32 - 32);
-        else if (Math.abs(y - y / 32 * 32 - 32) >= 26) y -= 32 - Math.abs(y - y / 32 * 32 - 32);
+        if (Math.abs(y - y / Sprite.SCALED_SIZE * Sprite.SCALED_SIZE - Sprite.SCALED_SIZE) <= 6) y += Math.abs(y - y / Sprite.SCALED_SIZE * Sprite.SCALED_SIZE - Sprite.SCALED_SIZE);
+        else if (Math.abs(y - y / Sprite.SCALED_SIZE * Sprite.SCALED_SIZE - Sprite.SCALED_SIZE) >= 26) y -= Sprite.SCALED_SIZE - Math.abs(y - y / Sprite.SCALED_SIZE * Sprite.SCALED_SIZE - Sprite.SCALED_SIZE);
         sprite = Sprite.movingSprite(Sprite.player_left, Sprite.player_left_1, Sprite.player_left_2, animate, time);
         img = sprite.getFxImage();
 
@@ -175,8 +171,8 @@ public class Bomber extends Entity {
     }
 
     public void moveRight() {
-        if (Math.abs(y - y / 32 * 32 - 32) <= 6) y += Math.abs(y - y / 32 * 32 - 32);
-        else if (Math.abs(y - y / 32 * 32 - 32) >= 26) y -= 32 - Math.abs(y - y / 32 * 32 - 32);
+        if (Math.abs(y - y / Sprite.SCALED_SIZE * Sprite.SCALED_SIZE - Sprite.SCALED_SIZE) <= 6) y += Math.abs(y - y / Sprite.SCALED_SIZE * Sprite.SCALED_SIZE - Sprite.SCALED_SIZE);
+        else if (Math.abs(y - y / Sprite.SCALED_SIZE * Sprite.SCALED_SIZE - Sprite.SCALED_SIZE) >= 26) y -= Sprite.SCALED_SIZE - Math.abs(y - y / Sprite.SCALED_SIZE * Sprite.SCALED_SIZE - Sprite.SCALED_SIZE);
         sprite = Sprite.movingSprite(Sprite.player_right, Sprite.player_right_1, Sprite.player_right_2, animate, time);
         super.img = sprite.getFxImage();
 
@@ -190,8 +186,8 @@ public class Bomber extends Entity {
     }
 
     public void moveUp() {
-        if (Math.abs(x - x / 32 * 32 - 32) <= 6) x += Math.abs(x - x / 32 * 32 - 32);
-        else if (Math.abs(x - x / 32 * 32 - 32) >= 26) x -= 32 - Math.abs(x - x / 32 * 32 - 32);
+        if (Math.abs(x - x / Sprite.SCALED_SIZE * Sprite.SCALED_SIZE - Sprite.SCALED_SIZE) <= 6) x += Math.abs(x - x / Sprite.SCALED_SIZE * Sprite.SCALED_SIZE - Sprite.SCALED_SIZE);
+        else if (Math.abs(x - x / Sprite.SCALED_SIZE * Sprite.SCALED_SIZE - Sprite.SCALED_SIZE) >= 26) x -= Sprite.SCALED_SIZE - Math.abs(x - x / Sprite.SCALED_SIZE * Sprite.SCALED_SIZE - Sprite.SCALED_SIZE);
         sprite = Sprite.movingSprite(Sprite.player_up, Sprite.player_up_1, Sprite.player_up_2, animate, time);
         img = sprite.getFxImage();
 
@@ -205,8 +201,8 @@ public class Bomber extends Entity {
     }
 
     public void moveDown() {
-        if (Math.abs(x - x / 32 * 32 - 32) <= 6) x += Math.abs(x - x / 32 * 32 - 32);
-        else if (Math.abs(x - x / 32 * 32 - 32) >= 26) x -= 32 - Math.abs(x - x / 32 * 32 - 32);
+        if (Math.abs(x - x / Sprite.SCALED_SIZE * Sprite.SCALED_SIZE - Sprite.SCALED_SIZE) <= 6) x += Math.abs(x - x / Sprite.SCALED_SIZE * Sprite.SCALED_SIZE - Sprite.SCALED_SIZE);
+        else if (Math.abs(x - x / Sprite.SCALED_SIZE * Sprite.SCALED_SIZE - Sprite.SCALED_SIZE) >= 26) x -= Sprite.SCALED_SIZE - Math.abs(x - x / Sprite.SCALED_SIZE * Sprite.SCALED_SIZE - 32);
         sprite = Sprite.movingSprite(Sprite.player_down, Sprite.player_down_1, Sprite.player_down_2, animate, time);
         img = sprite.getFxImage();
 
@@ -293,27 +289,26 @@ public class Bomber extends Entity {
             bomb = new Bomb(bomPosX, bomPosY, Sprite.bomb.getFxImage());
             bomb.addExplodeAnimation();
             bomb.setPlantTime(System.currentTimeMillis());
+            bomb.canPlaySound = true;
             entities.add(bomb);
 //            GameMap.entitiesMap[bomb.getY()/32][bomb.getX()/32].setPassable(false);
-//            bomb.setCanPlaySound(true);
         }
     }
 
     // Kiểm tra va chạm của bomberman với item, balloom, portal, Oneal
     private void checkBomber(List<Entity> entities) {
         if (this != null) {
-            for(Entity entity: entities) {
-                if (entity instanceof Item) {
+            for(int i = 0; i < entities.size(); i++) {
+                Entity entity = entities.get(i);
+                if ( entity instanceof Item) {
                     if(checkCollisionStillObject(this, entity)) {
                         ((Item) entity).eatItem(this);
                         entities.remove(entity);
                     }
                 }else if (entity instanceof Portal) {
-////                    if (entity.isShow()) {
-////                        if (checkCollision(bomberman, entity)) {
-////                            // win
-////                        }
-//                        }
+                    if (((Portal) entity).isShow() && checkCollision(this, entity)) {
+                        System.out.printf("win");
+                    }
                 } else if (entity instanceof Balloom) {
                     if (!((Balloom) entity).isDied() && checkCollision(this, entity)) {
                         this.setDie(true);

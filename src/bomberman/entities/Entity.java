@@ -1,17 +1,14 @@
 package bomberman.entities;
 
+import bomberman.graphics.Sprite;
 import javafx.scene.Scene;
-import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
-import bomberman.graphics.Sprite;
 
 import java.util.List;
 
 public abstract class Entity {
-    private static final int OFFSET = 4;
+    private static final int OFFSET = 8;
     private boolean breakable;
     private boolean passable;
     private boolean eatable;

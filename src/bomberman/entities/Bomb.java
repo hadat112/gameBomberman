@@ -13,9 +13,11 @@ public class Bomb extends Entity{
     public List<Flame> rightFlames = new ArrayList<Flame>();
     public List<Flame> upFlames = new ArrayList<Flame>();
     public List<Flame> downFlames = new ArrayList<Flame>();
+    public Flame centerFlame;
     private static int flameLength = 1;
 
     boolean isExploded = false;
+    boolean canPlaySound = false;
 
     private long plantTime = 0;
 
@@ -80,13 +82,19 @@ public class Bomb extends Entity{
 
     @Override
     public void update(Scene scene, List<Entity> entities) {
+        centerFlame.update(scene, entities);
         downFlames.forEach(f -> f.update(scene, entities));
         upFlames.forEach(f -> f.update(scene, entities));
         rightFlames.forEach(f -> f.update(scene, entities));
         leftFlames.forEach(f -> f.update(scene, entities));
     }
 
+    public static void setFlameLength(int flameLength) {
+        Bomb.flameLength = flameLength;
+    }
+
     public void showExplosion() {
+        centerFlame.setActive(true);
         upFlames.forEach(flame -> flame.explodeVertical());
         downFlames.forEach(flame -> flame.explodeVertical());
         leftFlames.forEach(flame -> flame.explodeHorizon());
@@ -96,8 +104,9 @@ public class Bomb extends Entity{
 
 //    Thêm lửa vào bốn phía
     public void addExplodeAnimation() {
-        int posX = x / 32;
-        int posY = y / 32;
+        int posX = x / Sprite.SCALED_SIZE;
+        int posY = y / Sprite.SCALED_SIZE;
+        centerFlame = new Flame(posX, posY, this.img);
         addLeftFlame(posX, posY);
         addRightFlame(posX, posY);
         addUpFlame(posX, posY);

@@ -1,0 +1,16 @@
+#button{
+    -fx-background-color: transparent;
+    -fx-background-image: url("/textures/playButton.png");
+    -fx-text-fill: white;
+}
+
+#mute{
+    -fx-background-image: url("/textures/mutenhacgame.png");
+    -fx-background-color: transparent;
+}
+
+#unmute{
+    -fx-background-image: url("/textures/nhacgame.png");
+    -fx-background-color: transparent;
+}
+

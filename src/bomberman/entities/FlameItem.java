@@ -10,5 +10,6 @@ public class FlameItem extends Item {
     @Override
     public void eatItem(Bomber bomber) {
         Bomb.increaseFlameLength();
+        System.out.println(Bomb.getFlameLength());
     }
 }

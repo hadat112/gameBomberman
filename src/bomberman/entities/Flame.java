@@ -10,6 +10,11 @@ import java.util.List;
 public class Flame extends Entity{
     private int animate = 0;
     private int time = 25;
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
     private boolean active = false;
     public Flame(int xUnit, int yUnit, Image img) {
         super(xUnit, yUnit, img);
@@ -42,7 +47,7 @@ public class Flame extends Entity{
 
 //    Kiểm tra nếu lửa chạm vào các entities
     private void checkFlameCollision(List<Entity> entities) {
-        Entity obj = GameMap.stillObjects[this.getY() / 32][this.getX() / 32];
+        Entity obj = GameMap.stillObjects[this.getY() / Sprite.SCALED_SIZE][this.getX() / Sprite.SCALED_SIZE];
 
 //        Nếu là gạch
         if (obj.isBreakable()) {
@@ -55,8 +60,8 @@ public class Flame extends Entity{
                 b.explodedAni();
                 return;
             } else {
-                GameMap.stillObjects[this.getY() / 32][this.getX() / 32] =
-                        new Grass(this.getX() / 32, this.getY() / 32, Sprite.grass.getFxImage());
+                GameMap.stillObjects[this.getY() / Sprite.SCALED_SIZE][this.getX() / Sprite.SCALED_SIZE] =
+                        new Grass(this.getX() / Sprite.SCALED_SIZE, this.getY() / Sprite.SCALED_SIZE, Sprite.grass.getFxImage());
                 return;
             }
         }

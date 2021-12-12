@@ -6,7 +6,6 @@ import bomberman.graphics.Sprite;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class GameMap {
@@ -22,11 +21,7 @@ public class GameMap {
     public static int bomberX;
     public static int bomberY;
 
-//    public static List<Balloom> ballooms = new ArrayList<>();
-//    public static List<Buff> buffs = new ArrayList<>();
-//    public static Portal portal;
-//    public static AIEnemy oneal;
-    public static int enemyNums;
+    public static int enermyNum = 0;
     private GameMap(){}
 
     public static void init(List<Entity> entities){
@@ -50,6 +45,7 @@ public class GameMap {
                     }
                     if (ch == '1'){
                         entities.add(new Balloom(j, i, Sprite.balloom_right1.getFxImage()));
+                        enermyNum++;
                     }
                     if (ch == 's'){
                         Item speedItem =  new SpeedItem(j, i, Sprite.powerup_speed.getFxImage());
@@ -68,6 +64,7 @@ public class GameMap {
                     }
                     if (ch == 'o'){
                         entities.add(new Oneal(j, i , Sprite.oneal_left1.getFxImage()));
+                        enermyNum++;
                     }
                     if (ch == '#') {
                         stillObjects[i][j] = new Wall(j, i, Sprite.wall.getFxImage());
@@ -87,9 +84,5 @@ public class GameMap {
 
     public static Entity[][] getMap() {
         return stillObjects;
-    }
-
-    public static int getEnemyNums(){
-        return enemyNums;
     }
 }

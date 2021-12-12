@@ -43,13 +43,14 @@ public class Balloom extends Enermy{
                 disappearAnimation();
             } else {
                 entities.remove(this);
+                GameMap.enermyNum--;
             }
         }
     }
 
     //Di chuyển sang trái, nếu bị cản thì đổi hướng
     private void moveLeft() {
-        if (!checkCollisionAround(GameMap.stillObjects[y / 32][x / 32 - 1])) {
+        if (!checkCollisionAround(GameMap.stillObjects[y / Sprite.SCALED_SIZE][x / Sprite.SCALED_SIZE - 1])) {
             x -= SPEED;
             left = true;
             //find3PossibleDir();
@@ -60,7 +61,7 @@ public class Balloom extends Enermy{
 
     //Di chuyển sang phải, nếu bị cản thì đổi hướng
     private void moveRight() {
-        if (!checkCollisionAround(GameMap.stillObjects[y / 32][x / 32 + 1])) {
+        if (!checkCollisionAround(GameMap.stillObjects[y / Sprite.SCALED_SIZE][x / Sprite.SCALED_SIZE + 1])) {
             x += SPEED;
             left = false;
         } else {
@@ -70,7 +71,7 @@ public class Balloom extends Enermy{
 
     //Di chuyển lên trên, nếu bị cản thì đổi hướng
     private void moveUp() {
-        if (!checkCollisionAround(GameMap.stillObjects[(y - 32) / 32][x / 32])) {
+        if (!checkCollisionAround(GameMap.stillObjects[(y - Sprite.SCALED_SIZE) / Sprite.SCALED_SIZE][x / Sprite.SCALED_SIZE])) {
             y -= SPEED;
         } else {
             changeDir();
@@ -79,7 +80,7 @@ public class Balloom extends Enermy{
 
     //Di chuyển xuống dưới, nếu bị cản thì đổi hướng
     private void moveDown() {
-        if (!checkCollisionAround(GameMap.stillObjects[(y + 32) / 32][x / 32])) {
+        if (!checkCollisionAround(GameMap.stillObjects[(y + Sprite.SCALED_SIZE) / Sprite.SCALED_SIZE][x / Sprite.SCALED_SIZE])) {
             y += SPEED;
         } else {
             changeDir();
@@ -125,16 +126,16 @@ public class Balloom extends Enermy{
     //Kiểm tra 4 hướng xung quanh
     private void checkAround() {
         possibleDirection.clear();
-        if (!checkCollisionAround(GameMap.stillObjects[y / 32][(x + balloomWidth) / 32])) {
+        if (!checkCollisionAround(GameMap.stillObjects[y / Sprite.SCALED_SIZE][(x + balloomWidth) / Sprite.SCALED_SIZE])) {
             possibleDirection.add(6);
         }
-        if (!checkCollisionAround(GameMap.stillObjects[y / 32][(x - balloomWidth) / 32])) {
+        if (!checkCollisionAround(GameMap.stillObjects[y / Sprite.SCALED_SIZE][(x - balloomWidth) / Sprite.SCALED_SIZE])) {
             possibleDirection.add(4);
         }
-        if (!checkCollisionAround(GameMap.stillObjects[(y + balloomHeight) / 32][x / 32])) {
+        if (!checkCollisionAround(GameMap.stillObjects[(y + balloomHeight) / Sprite.SCALED_SIZE][x / Sprite.SCALED_SIZE])) {
             possibleDirection.add(2);
         }
-        if (!checkCollisionAround(GameMap.stillObjects[(y - balloomHeight) / 32][x / 32])) {
+        if (!checkCollisionAround(GameMap.stillObjects[(y - balloomHeight) / Sprite.SCALED_SIZE][x / Sprite.SCALED_SIZE])) {
             possibleDirection.add(8);
         }
     }
@@ -176,8 +177,8 @@ public class Balloom extends Enermy{
             if (obj.isPassable()) {
                 return false;
             } else {
-                boolean collisionX = x + 32 >= obj.x && obj.x + obj.getWidth() >= x;
-                boolean collisionY = y + 32 >= obj.y && obj.y + obj.getHeight() >= y;
+                boolean collisionX = x + Sprite.SCALED_SIZE >= obj.x && obj.x + obj.getWidth() >= x;
+                boolean collisionY = y + Sprite.SCALED_SIZE >= obj.y && obj.y + obj.getHeight() >= y;
                 return collisionX && collisionY;
             }
         } else return false;
