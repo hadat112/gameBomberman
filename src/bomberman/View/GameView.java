@@ -23,6 +23,7 @@ public class GameView {
 
     private Stage menuStage;
     private Stage gameStage;
+    private WinView winView;
 
     private GraphicsContext gc;
     private Canvas canvas;
@@ -75,13 +76,16 @@ public class GameView {
     public void createNewGame(Stage menuStage) {
         this.menuStage = menuStage;
         this.menuStage.hide();
-
+        this.winView = new WinView(this, menuStage);
     }
 
     public void update(Scene scene, List<Entity> entities) {
         for (int i = 0; i < entities.size(); i++)
             entities.get(i).update(scene, entities);
 //            entities.forEach(entity -> entity.update(scene, entities));
+        if (bomberman.isWin()) {
+            winView.show();
+        }
     }
 
     public void render() {
@@ -106,5 +110,13 @@ public class GameView {
                 ((Bomb) g).leftFlames.forEach(f -> f.render(gc));
             }
         });
+    }
+
+    public AnimationTimer getTimer() {
+        return timer;
+    }
+
+    public Stage getGameStage() {
+        return gameStage;
     }
 }

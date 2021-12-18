@@ -45,7 +45,7 @@ public class GameMap {
                     }
                     if (ch == '1'){
                         entities.add(new Balloom(j, i, Sprite.balloom_right1.getFxImage()));
-                        enermyNum++;
+//                        enermyNum++;
                     }
                     if (ch == 's'){
                         Item speedItem =  new SpeedItem(j, i, Sprite.powerup_speed.getFxImage());
@@ -64,7 +64,7 @@ public class GameMap {
                     }
                     if (ch == 'o'){
                         entities.add(new Oneal(j, i , Sprite.oneal_left1.getFxImage()));
-                        enermyNum++;
+//                        enermyNum++;
                     }
                     if (ch == '#') {
                         stillObjects[i][j] = new Wall(j, i, Sprite.wall.getFxImage());

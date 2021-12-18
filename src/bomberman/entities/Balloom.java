@@ -25,7 +25,6 @@ public class Balloom extends Enermy{
     private List<Integer> possibleDirection = new ArrayList<>();
     private int numOfPosDir;
 
-
     public Balloom(int x, int y, Image img) {
         super(x, y, img);
         dir = 6;
@@ -53,7 +52,6 @@ public class Balloom extends Enermy{
         if (!checkCollisionAround(GameMap.stillObjects[y / Sprite.SCALED_SIZE][x / Sprite.SCALED_SIZE - 1])) {
             x -= SPEED;
             left = true;
-            //find3PossibleDir();
         } else {
             changeDir();
         }

@@ -23,8 +23,14 @@ public class Bomber extends Entity {
 
     private boolean die = false;
 
+    private boolean win = false;
+
     private int bomPosX;
     private int bomPosY;
+
+    public boolean isWin() {
+        return win;
+    }
 
     public boolean isDie() {
         return die;
@@ -63,12 +69,8 @@ public class Bomber extends Entity {
                 Sound.playLosingSound();
                 Sound.stop();
                 entities.remove(this);
-
-//                Sound.playLosingSound();
-//                Sound.stop();
             }
         }
-
         checkBomber(entities);
 
 //        Kiểm tra xem có bomb đang được đặt không nếu có thì chạy animation trong 2s sau đó cho nổ
@@ -307,7 +309,7 @@ public class Bomber extends Entity {
                     }
                 }else if (entity instanceof Portal) {
                     if (((Portal) entity).isShow() && checkCollision(this, entity)) {
-                        System.out.printf("win");
+                        win = true;
                     }
                 } else if (entity instanceof Balloom) {
                     if (!((Balloom) entity).isDied() && checkCollision(this, entity)) {

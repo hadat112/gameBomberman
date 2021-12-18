@@ -20,8 +20,6 @@ public class Oneal extends Enermy{
     private int animate = 0;
     private int time = 25;
 
-    private int oldPos;
-    private int currentPos;
 
     private boolean isDied = false;
     private long diedTime;

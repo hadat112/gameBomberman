@@ -101,7 +101,6 @@ public class Bomb extends Entity{
         rightFlames.forEach(flame -> flame.explodeHorizon());
     }
 
-
 //    Thêm lửa vào bốn phía
     public void addExplodeAnimation() {
         int posX = x / Sprite.SCALED_SIZE;
